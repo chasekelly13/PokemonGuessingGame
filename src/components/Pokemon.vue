@@ -4,6 +4,7 @@
     <img v-bind:src="pokemonImg" id="silhouette" />
     <input type="text" v-model="pokemonGuess" />
     <button @click="guess(pokemonGuess)">Guess</button>
+    <button @click="generatePokemon">Generate Pokemon</button>
     <p>{{ message }}</p>
     <div>Current Score: {{ currentScore }}</div>
     <div>Total Score: {{ totalScore }}</div>
@@ -47,6 +48,11 @@ export default {
         this.message = `Guess again! Your Current Score decreased by 1`;
         this.currentScore--;
       }
+    },
+    generatePokemon() {
+      let id = Math.floor(Math.random() * 898) + 1;
+      let randomPokemon = getPokemon(id);
+      console.log(randomPokemon);
     },
   },
 };
