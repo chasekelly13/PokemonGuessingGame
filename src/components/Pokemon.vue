@@ -52,7 +52,8 @@ export default {
     generatePokemon() {
       let id = Math.floor(Math.random() * 898) + 1;
       let randomPokemon = getPokemon(id);
-      console.log(randomPokemon);
+      //need to do a randomPokemon.name or something
+      console.log(randomPokemon.species.name);
     },
   },
 };
