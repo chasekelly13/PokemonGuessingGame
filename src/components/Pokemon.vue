@@ -1,0 +1,114 @@
+<template>
+  <div class="hello">
+    <h1>Who's That Pokemon?</h1>
+    <img v-bind:src="pokemonImg" id="silhouette" />
+    <div v-if="id">
+      <input type="text" v-model="pokemonGuess" />
+      <button @click="guess(pokemonGuess)">Guess</button>
+    </div>
+    <div v-else>
+      <button @click="generatePokemon">Get Started!</button>
+    </div>
+    <p>{{ message }}</p>
+    <div>Current Score: {{ currentScore }}</div>
+    <div>Total Score: {{ totalScore }}</div>
+  </div>
+</template>
+
+<script>
+import { getPokemon } from "../api/pokemon";
+export default {
+  name: "Pokemon",
+  props: {
+    msg: String,
+  },
+  data() {
+    return {
+      pokemonGuess: "",
+      actualPokemon: "",
+      currentScore: 20,
+      totalScore: 0,
+      pokemonImg: "./images/question.png",
+      message: "",
+      gen1Pokemon: [],
+      gen2Pokemon: [],
+      gen3Pokemon: [],
+      gen4Pokemon: [],
+      gen5Pokemon: [],
+      gen6Pokemon: [],
+      gen7Pokemon: [],
+      gen8Pokemon: [],
+      guessedPokemon: [],
+      id: null,
+      randomPokemon: {},
+    };
+  },
+  watch: {},
+  computed: {},
+  methods: {
+    //guess function for seeing if user correctly guessed Pokemon's name.
+    guess(pokemon) {
+      if (pokemon.toLowerCase() === this.actualPokemon) {
+        this.message = `Correct Answer! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
+        this.totalScore = this.totalScore + this.currentScore;
+        this.currentScore = 20;
+        // this.newPokemonGenerated();
+        // this.initializePokemonData();
+      } else {
+        this.message = `Guess again! Your Current Score decreased by 1`;
+        this.currentScore--;
+      }
+    },
+    //generating a random number to use as a Pokemon id
+    generatePokemon() {
+      this.id = Math.floor(Math.random() * 898) + 1;
+      this.initializePokemonData();
+      //need to do a randomPokemon.name or something
+      console.log(randomPokemon.species.name);
+    },
+    //generating a new pokemon ID
+    newPokemonGenerated() {
+      //checking to see if pokemon has already been guessed or if Id = 899
+      if (guessedPokemon.includes(id) || id === 899) {
+        //setting a new id to the id field
+        this.id = generatedPokemon();
+        //adding the id that was just generated to the array of guessedPokemon to keep track of what Pokemon have been guessed
+        this.guessedPokemon.push(id);
+      } else {
+        //adding Pokemon already played to guessedPokemon array
+        this.guessedPokemon.push(id);
+      }
+    },
+    //getting new API information from pokeapi and setting it's name and img to those variables
+    initializePokemonData() {
+      //running get to retrieve data from pokeapi with pokemon's id and setting that object to randomPokemon
+      this.randomPokemon = getPokemon(id);
+      //setting name from the retrieved data
+      this.actualPokemon = randomPokemon.species.name;
+      //setting the sprite to the pokemonImg
+      this.pokemonImg = random.sprites.front_default;
+    },
+  },
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+#silhouette {
+  filter: contrast(0%) brightness(0%);
+}
+</style>
