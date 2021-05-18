@@ -48,7 +48,9 @@ export default {
       highScore: 0,
     };
   },
-  watch: {},
+  watch: {
+    //put in a watcher to see if the user's current score hits 0 (if so then give them a message and go to the skip function)
+  },
   computed: {
     silhouetteActive() {
       return { silhouette: silhouetteSelected };
