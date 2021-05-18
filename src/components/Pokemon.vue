@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
     <h1>Who's That Pokemon?</h1>
-    <img v-bind:src="pokemonImg" id="silhouette" />
+    <img v-bind:src="pokemonImg" :class="silhouetteSelected()" />
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button @click="guess(pokemonGuess)">Guess</button>
-      <button>Start Over!</button>
+      <button @click="restart()">Start Over!</button>
     </div>
     <div v-else>
       <button @click="generatePokemon">Get Started!</button>
@@ -13,6 +13,7 @@
     <p>{{ message }}</p>
     <div>Current Score: {{ currentScore }}</div>
     <div>Total Score: {{ totalScore }}</div>
+    <div v-if="highScore">High Score: {{ highScore }}</div>
   </div>
 </template>
 
@@ -42,10 +43,16 @@ export default {
       guessedPokemon: [],
       id: null,
       randomPokemon: {},
+      silhouetteSelected: false,
+      highScore: 0,
     };
   },
   watch: {},
-  computed: {},
+  computed: {
+    silhouetteActive() {
+      return { silhouette: silhouetteSelected };
+    },
+  },
   methods: {
     //guess function for seeing if user correctly guessed Pokemon's name.
     async guess(pokemon) {
@@ -88,6 +95,19 @@ export default {
       //setting the sprite to the pokemonImg
       this.pokemonImg = this.randomPokemon.sprites.front_default;
     },
+    restart() {
+      this.highScore = this.totalScore;
+      this.guessedPokemon = [];
+      this.id = null;
+      this.randomPokemon = {};
+      this.silhouetteSelected = false;
+      this.pokemonGuess = "";
+      this.actualPokemon = "";
+      this.currentScore = 20;
+      this.totalScore = 0;
+      this.pokemonImg = "/images/question.png";
+      this.message = "";
+    },
   },
 };
 </script>
@@ -108,7 +128,7 @@ li {
 a {
   color: #42b983;
 }
-#silhouette {
+.silhouette {
   filter: contrast(0%) brightness(0%);
 }
 </style>
