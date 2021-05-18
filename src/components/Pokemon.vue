@@ -5,6 +5,7 @@
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button @click="guess(pokemonGuess)">Guess</button>
+      <button>Start Over!</button>
     </div>
     <div v-else>
       <button @click="generatePokemon">Get Started!</button>
@@ -28,7 +29,7 @@ export default {
       actualPokemon: "",
       currentScore: 20,
       totalScore: 0,
-      pokemonImg: "./images/question.png",
+      pokemonImg: "/images/question.png",
       message: "",
       gen1Pokemon: [],
       gen2Pokemon: [],
@@ -47,46 +48,45 @@ export default {
   computed: {},
   methods: {
     //guess function for seeing if user correctly guessed Pokemon's name.
-    guess(pokemon) {
+    async guess(pokemon) {
       if (pokemon.toLowerCase() === this.actualPokemon) {
         this.message = `Correct Answer! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
         this.totalScore = this.totalScore + this.currentScore;
         this.currentScore = 20;
-        // this.newPokemonGenerated();
-        // this.initializePokemonData();
+        this.newPokemonGenerated();
+        await this.initializePokemonData();
+        console.log(this.actualPokemon);
       } else {
         this.message = `Guess again! Your Current Score decreased by 1`;
         this.currentScore--;
       }
     },
     //generating a random number to use as a Pokemon id
-    generatePokemon() {
+    async generatePokemon() {
       this.id = Math.floor(Math.random() * 898) + 1;
-      this.initializePokemonData();
-      //need to do a randomPokemon.name or something
-      console.log(randomPokemon.species.name);
+      await this.initializePokemonData();
+      this.guessedPokemon.push(this.id);
+      console.log(this.actualPokemon);
     },
     //generating a new pokemon ID
-    newPokemonGenerated() {
+    async newPokemonGenerated() {
       //checking to see if pokemon has already been guessed or if Id = 899
-      if (guessedPokemon.includes(id) || id === 899) {
+      while (this.guessedPokemon.includes(this.id) || this.id === 899) {
         //setting a new id to the id field
-        this.id = generatedPokemon();
+        this.id = Math.floor(Math.random() * 898) + 1;
         //adding the id that was just generated to the array of guessedPokemon to keep track of what Pokemon have been guessed
-        this.guessedPokemon.push(id);
-      } else {
-        //adding Pokemon already played to guessedPokemon array
-        this.guessedPokemon.push(id);
+        this.guessedPokemon.push(this.id);
+        return this.id;
       }
     },
     //getting new API information from pokeapi and setting it's name and img to those variables
-    initializePokemonData() {
+    async initializePokemonData() {
       //running get to retrieve data from pokeapi with pokemon's id and setting that object to randomPokemon
-      this.randomPokemon = getPokemon(id);
-      //setting name from the retrieved data
-      this.actualPokemon = randomPokemon.species.name;
+      this.randomPokemon = await getPokemon(this.id);
+      // setting name from the retrieved data
+      this.actualPokemon = this.randomPokemon.species.name;
       //setting the sprite to the pokemonImg
-      this.pokemonImg = random.sprites.front_default;
+      this.pokemonImg = this.randomPokemon.sprites.front_default;
     },
   },
 };

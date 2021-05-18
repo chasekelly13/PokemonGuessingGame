@@ -1,19 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Pokemon/>
+    <Pokemon />
   </div>
 </template>
 
 <script>
-import Pokemon from './components/Pokemon.vue'
+import Pokemon from "./components/Pokemon.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Pokemon
-  }
-}
+    Pokemon,
+  },
+};
 </script>
 
 <style>

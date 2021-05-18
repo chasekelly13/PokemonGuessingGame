@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosAPI = axios.create({
-    baseURL: "https://pokeapi.co/api/v2/pokemon/"
+    baseURL: "https://pokeapi.co/api/v2/"
 });
 
 const apiRequest = (method, url, request) => {
@@ -15,7 +15,7 @@ const apiRequest = (method, url, request) => {
         data: request,
         headers
     }).then(res => {
-        return Promise.resolve(res.data);
+        return res.data;
     })
         .catch(err => {
             return Promise.reject(err);
