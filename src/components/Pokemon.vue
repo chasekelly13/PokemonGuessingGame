@@ -64,6 +64,9 @@ export default {
         this.newPokemonGenerated();
         await this.initializePokemonData();
         console.log(this.actualPokemon);
+        if (this.totalScore > this.highScore) {
+          this.highScore = this.totalScore;
+        }
       } else {
         this.message = `Guess again! Your Current Score decreased by 1.`;
         this.currentScore--;
