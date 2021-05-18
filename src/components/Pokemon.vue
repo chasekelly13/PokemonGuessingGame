@@ -105,7 +105,6 @@ export default {
       this.pokemonImg = this.randomPokemon.sprites.front_default;
     },
     restart() {
-      this.highScore = this.totalScore;
       this.guessedPokemon = [];
       this.id = null;
       this.randomPokemon = {};
