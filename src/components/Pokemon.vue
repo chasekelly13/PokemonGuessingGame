@@ -65,6 +65,7 @@ export default {
         this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
         this.totalScore = this.totalScore + this.currentScore;
         this.silhouetteSelected = false;
+        this.next = true;
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -127,6 +128,7 @@ export default {
       await this.initializePokemonData();
       this.silhouetteSelected = true;
       this.message = "";
+      this.next = false;
       console.log(this.actualPokemon);
     },
   },
