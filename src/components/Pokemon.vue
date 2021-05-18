@@ -5,6 +5,7 @@
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button @click="guess(pokemonGuess)">Guess</button>
+      <button @click="skip()">Skip Pokemon</button>
       <button @click="restart()">Start Over!</button>
     </div>
     <div v-else>
@@ -57,14 +58,14 @@ export default {
     //guess function for seeing if user correctly guessed Pokemon's name.
     async guess(pokemon) {
       if (pokemon.toLowerCase() === this.actualPokemon) {
-        this.message = `Correct Answer! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
+        this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
         this.totalScore = this.totalScore + this.currentScore;
         this.currentScore = 20;
         this.newPokemonGenerated();
         await this.initializePokemonData();
         console.log(this.actualPokemon);
       } else {
-        this.message = `Guess again! Your Current Score decreased by 1`;
+        this.message = `Guess again! Your Current Score decreased by 1.`;
         this.currentScore--;
       }
     },
@@ -107,6 +108,13 @@ export default {
       this.totalScore = 0;
       this.pokemonImg = "/images/question.png";
       this.message = "";
+    },
+    async skip() {
+      this.message = `Pokemon skipped! That Pokemon was ${this.actualPokemon}! Your Total Score increased by 0. Next Pokemon generated.`;
+      this.currentScore = 20;
+      this.newPokemonGenerated();
+      await this.initializePokemonData();
+      console.log(this.actualPokemon);
     },
   },
 };
