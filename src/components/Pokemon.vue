@@ -4,8 +4,9 @@
     <img v-bind:src="pokemonImg" :class="silhouetteSelected()" />
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
-      <button @click="guess(pokemonGuess)">Guess</button>
-      <button @click="skip()">Skip Pokemon</button>
+      <button @click="guess(pokemonGuess)">Guess</button> <br />
+      <button @click="skip()">Skip Pokemon</button> <br />
+      <button v-if="next" @click="next()">Next</button><br />
       <button @click="restart()">Start Over!</button>
     </div>
     <div v-else>
@@ -46,6 +47,7 @@ export default {
       randomPokemon: {},
       silhouetteSelected: false,
       highScore: 0,
+      next: false,
     };
   },
   watch: {
@@ -62,10 +64,7 @@ export default {
       if (pokemon.toLowerCase() === this.actualPokemon) {
         this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
         this.totalScore = this.totalScore + this.currentScore;
-        this.currentScore = 20;
-        this.newPokemonGenerated();
-        await this.initializePokemonData();
-        console.log(this.actualPokemon);
+        this.silhouetteSelected = false;
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -80,6 +79,7 @@ export default {
       await this.initializePokemonData();
       this.guessedPokemon.push(this.id);
       console.log(this.actualPokemon);
+      this.silhouetteSelected = true;
     },
     //generating a new pokemon ID
     async newPokemonGenerated() {
@@ -119,6 +119,14 @@ export default {
       this.currentScore = 20;
       this.newPokemonGenerated();
       await this.initializePokemonData();
+      console.log(this.actualPokemon);
+    },
+    async next() {
+      this.currentScore = 20;
+      this.newPokemonGenerated();
+      await this.initializePokemonData();
+      this.silhouetteSelected = true;
+      this.message = "";
       console.log(this.actualPokemon);
     },
   },
