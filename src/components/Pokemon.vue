@@ -1,12 +1,12 @@
 <template>
   <div class="hello">
     <h1>Who's That Pokemon?</h1>
-    <img v-bind:src="pokemonImg" :class="silhouetteSelected()" />
+    <img v-bind:src="pokemonImg" class="silhouette" />
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
-      <button @click="guess(pokemonGuess)">Guess</button> <br />
+      <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button> <br />
       <button @click="skip()">Skip Pokemon</button> <br />
-      <button v-if="next" @click="next()">Next</button><br />
+      <button v-if="next" @click="nextfunc()">Next</button><br />
       <button @click="restart()">Start Over!</button>
     </div>
     <div v-else>
@@ -48,24 +48,26 @@ export default {
       silhouetteSelected: false,
       highScore: 0,
       next: false,
+      guessbtn: true,
     };
   },
   watch: {
     //put in a watcher to see if the user's current score hits 0 (if so then give them a message and go to the skip function)
   },
   computed: {
-    silhouetteActive() {
-      return { silhouette: silhouetteSelected };
-    },
+    // silhouetteActive() {
+    //   return { silhouette: silhouetteSelected };
+    // },
   },
   methods: {
     //guess function for seeing if user correctly guessed Pokemon's name.
     async guess(pokemon) {
       if (pokemon.toLowerCase() === this.actualPokemon) {
-        this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}.`;
+        this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}. Click 'Next' to go to the next Pokemon`;
         this.totalScore = this.totalScore + this.currentScore;
         this.silhouetteSelected = false;
         this.next = true;
+        this.guessbtn = false;
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -113,6 +115,7 @@ export default {
       this.currentScore = 20;
       this.totalScore = 0;
       this.pokemonImg = "/images/question.png";
+      this.guessbtn = true;
       this.message = "";
     },
     async skip() {
@@ -122,13 +125,15 @@ export default {
       await this.initializePokemonData();
       console.log(this.actualPokemon);
     },
-    async next() {
+    async nextfunc() {
       this.currentScore = 20;
       this.newPokemonGenerated();
       await this.initializePokemonData();
       this.silhouetteSelected = true;
       this.message = "";
       this.next = false;
+      this.pokemonGuess = "";
+      this.guessbtn = true;
       console.log(this.actualPokemon);
     },
   },
