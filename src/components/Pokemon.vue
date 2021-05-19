@@ -2,6 +2,11 @@
   <div class="hello">
     <h1>Who's That Pokemon?</h1>
     <img v-bind:src="pokemonImg" class="silhouette" />
+    <!-- <img v-bind:src="pokemonImg" :style="{filter: silhouetteSelected ? (contrast(0%) brightness(0%)) : (contrast(100%) brightness(100%))}"> -->
+    <!-- <img v-bind:src="pokemonImg" :class="silhouetteSelected ? 'silhouette normal' : 'normal'" /> -->
+    <!-- <img v-bind:src="pokemonImg" class="normal" :class="{silhouette: silhouetteSelected}" > -->
+    <!-- Next one is not inline, but using computed properties -->
+    <!-- <img v-bind:src="pokemonImg" class="normal" :class="silhouetteActive" > -->
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button> <br />
@@ -56,7 +61,7 @@ export default {
   },
   computed: {
     // silhouetteActive() {
-    //   return { silhouette: silhouetteSelected };
+    //   return { silhouette: this.silhouetteSelected };
     // },
   },
   methods: {
@@ -157,5 +162,9 @@ a {
 }
 .silhouette {
   filter: contrast(0%) brightness(0%);
+}
+.normal {
+  height: 100px;
+  width: 100px;
 }
 </style>
