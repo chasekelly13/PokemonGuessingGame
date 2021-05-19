@@ -5,6 +5,7 @@
     <!-- <img v-bind:src="pokemonImg" :style="{filter: silhouetteSelected ? (contrast(0%) brightness(0%)) : (contrast(100%) brightness(100%))}"> -->
     <!-- <img v-bind:src="pokemonImg" :class="silhouetteSelected ? 'silhouette normal' : 'normal'" /> -->
     <!-- <img v-bind:src="pokemonImg" class="normal" :class="{silhouette: silhouetteSelected}" > -->
+    <!-- <img v-bind:src="pokemonImg" :class="['normal', {silhouette: silhouetteSelected}]" > -->
     <!-- Next one is not inline, but using computed properties -->
     <!-- <img v-bind:src="pokemonImg" class="normal" :class="silhouetteActive" > -->
     <div v-if="id">
