@@ -117,12 +117,11 @@ export default {
       this.guessbtn = true;
       this.message = "";
     },
-    async skip() {
-      this.message = `Pokemon skipped! That Pokemon was ${this.actualPokemon}! Your Total Score increased by 0. Next Pokemon generated.`;
+    skip() {
+      this.message = `Pokemon skipped! That Pokemon was ${this.actualPokemon}! Your Total Score increased by 0. Click 'Next' to generate next Pokemon.`;
       this.currentScore = 20;
-      this.newPokemonGenerated();
-      await this.initializePokemonData();
-      console.log(this.actualPokemon);
+      this.next = true;
+      this.guessbtn = false;
     },
     async nextfunc() {
       this.currentScore = 20;
