@@ -16,10 +16,16 @@
         placeholder="Guess here!"
         v-on:keyup.enter="guess(pokemonGuess)"
       />
-      <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button>
       <br />
-      <button v-if="skipbtn" @click="skip()">Skip Pokemon</button> <br />
-      <button v-if="next" @click="nextfunc()">Next</button><br />
+      <p></p>
+      <div v-if="guessbtn">
+        <button @click="guess(pokemonGuess)">Guess</button>
+        <button @click="skip()">Skip Pokemon</button>
+      </div>
+      <div v-if="next">
+        <button @click="nextfunc()">Next</button>
+      </div>
+      <br />
       <button @click="restart()">Start Over!</button>
     </div>
     <div v-else>
@@ -62,7 +68,6 @@ export default {
       highScore: 0,
       next: false,
       guessbtn: true,
-      skipbtn: true,
     };
   },
   watch: {
@@ -82,7 +87,7 @@ export default {
         this.silhouetteSelected = false;
         this.next = true;
         this.guessbtn = false;
-        this.skipbtn = false;
+
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -130,8 +135,9 @@ export default {
       this.totalScore = 0;
       this.pokemonImg = "/images/question.png";
       this.guessbtn = true;
-      this.skipbtn = true;
+
       this.message = "";
+      this.next = false;
     },
     skip() {
       this.message = `Pokemon skipped! That Pokemon was ${this.actualPokemon}! Your Total Score increased by 0. Click 'Next' to generate next Pokemon.`;
@@ -139,7 +145,6 @@ export default {
       this.next = true;
       this.silhouetteSelected = false;
       this.guessbtn = false;
-      this.skipbtn = false;
     },
     async nextfunc() {
       this.currentScore = 20;
@@ -150,7 +155,7 @@ export default {
       this.next = false;
       this.pokemonGuess = "";
       this.guessbtn = true;
-      this.skipbtn = true;
+
       console.log(this.actualPokemon);
     },
   },
@@ -177,7 +182,7 @@ a {
   filter: contrast(0%) brightness(0%);
 }
 .normal {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
 }
 </style>
