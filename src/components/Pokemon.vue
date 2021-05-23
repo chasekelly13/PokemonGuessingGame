@@ -1,7 +1,14 @@
 <template>
   <div class="hello">
     <h1>Who's That Pokemon?</h1>
-    <img v-bind:src="pokemonImg" class="silhouette" />
+    <img
+      v-bind:src="pokemonImg"
+      class="normal"
+      :class="{ silhouette: silhouetteSelected }"
+    />
+    <!-- <img v-bind:src="pokemonImg" :class="['normal', {silhouette: silhouetteSelected}]" > -->
+    <!-- Next one is not inline, but using computed properties -->
+    <!-- <img v-bind:src="pokemonImg" class="normal" :class="silhouetteActive" > -->
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button> <br />
@@ -56,7 +63,7 @@ export default {
   },
   computed: {
     // silhouetteActive() {
-    //   return { silhouette: silhouetteSelected };
+    //   return { silhouette: this.silhouetteSelected };
     // },
   },
   methods: {
@@ -121,6 +128,7 @@ export default {
       this.message = `Pokemon skipped! That Pokemon was ${this.actualPokemon}! Your Total Score increased by 0. Click 'Next' to generate next Pokemon.`;
       this.currentScore = 20;
       this.next = true;
+      this.silhouetteSelected = false;
       this.guessbtn = false;
     },
     async nextfunc() {
@@ -156,5 +164,9 @@ a {
 }
 .silhouette {
   filter: contrast(0%) brightness(0%);
+}
+.normal {
+  height: 100px;
+  width: 100px;
 }
 </style>
