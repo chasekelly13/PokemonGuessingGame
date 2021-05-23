@@ -10,8 +10,14 @@
     <!-- Next one is not inline, but using computed properties -->
     <!-- <img v-bind:src="pokemonImg" class="normal" :class="silhouetteActive" > -->
     <div v-if="id">
-      <input type="text" v-model="pokemonGuess" />
-      <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button> <br />
+      <input
+        type="text"
+        v-model="pokemonGuess"
+        placeholder="Guess here!"
+        v-on:keyup.enter="guess(pokemonGuess)"
+      />
+      <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button>
+      <br />
       <button v-if="skipbtn" @click="skip()">Skip Pokemon</button> <br />
       <button v-if="next" @click="nextfunc()">Next</button><br />
       <button @click="restart()">Start Over!</button>
@@ -70,7 +76,7 @@ export default {
   methods: {
     //guess function for seeing if user correctly guessed Pokemon's name.
     async guess(pokemon) {
-      if (pokemon.toLowerCase() === this.actualPokemon) {
+      if (pokemon.toLowerCase().trim() === this.actualPokemon) {
         this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}. Click 'Next' to go to the next Pokemon`;
         this.totalScore = this.totalScore + this.currentScore;
         this.silhouetteSelected = false;
