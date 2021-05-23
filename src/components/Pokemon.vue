@@ -12,7 +12,7 @@
     <div v-if="id">
       <input type="text" v-model="pokemonGuess" />
       <button v-if="guessbtn" @click="guess(pokemonGuess)">Guess</button> <br />
-      <button @click="skip()">Skip Pokemon</button> <br />
+      <button v-if="skipbtn" @click="skip()">Skip Pokemon</button> <br />
       <button v-if="next" @click="nextfunc()">Next</button><br />
       <button @click="restart()">Start Over!</button>
     </div>
@@ -56,6 +56,7 @@ export default {
       highScore: 0,
       next: false,
       guessbtn: true,
+      skipbtn: true,
     };
   },
   watch: {
@@ -75,6 +76,7 @@ export default {
         this.silhouetteSelected = false;
         this.next = true;
         this.guessbtn = false;
+        this.skipbtn = false;
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -122,6 +124,7 @@ export default {
       this.totalScore = 0;
       this.pokemonImg = "/images/question.png";
       this.guessbtn = true;
+      this.skipbtn = true;
       this.message = "";
     },
     skip() {
@@ -130,6 +133,7 @@ export default {
       this.next = true;
       this.silhouetteSelected = false;
       this.guessbtn = false;
+      this.skipbtn = false;
     },
     async nextfunc() {
       this.currentScore = 20;
@@ -140,6 +144,7 @@ export default {
       this.next = false;
       this.pokemonGuess = "";
       this.guessbtn = true;
+      this.skipbtn = true;
       console.log(this.actualPokemon);
     },
   },
