@@ -1,10 +1,13 @@
 <template>
-  <div class="hello">
+  <div class="container mx-auto">
     <h1>Who's That Pokemon?</h1>
     <img
       v-bind:src="pokemonImg"
-      class="normal"
-      :class="{ silhouette: silhouetteSelected }"
+      :class="[
+        'normal',
+        'container mx-auto',
+        { silhouette: silhouetteSelected },
+      ]"
     />
     <!-- <img v-bind:src="pokemonImg" :class="['normal', {silhouette: silhouetteSelected}]" > -->
     <!-- Next one is not inline, but using computed properties -->
@@ -15,11 +18,17 @@
         v-model="pokemonGuess"
         placeholder="Guess here!"
         v-on:keyup.enter="guess(pokemonGuess)"
+        class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white"
       />
       <br />
       <p></p>
       <div v-if="guessbtn">
-        <button @click="guess(pokemonGuess)">Guess</button>
+        <button
+          class="focus:outline-none text-white text-sm py-2 px-4 rounded-full bg-green-400 hover:bg-green-500 hover:shadow-lg"
+          @click="guess(pokemonGuess)"
+        >
+          Guess
+        </button>
         <button @click="skip()">Skip Pokemon</button>
       </div>
       <div v-if="next">
@@ -81,6 +90,9 @@ export default {
   methods: {
     //guess function for seeing if user correctly guessed Pokemon's name.
     async guess(pokemon) {
+      if (this.next === true) {
+        return;
+      }
       if (pokemon.toLowerCase().trim() === this.actualPokemon) {
         this.message = `Correct! This Pokemon is ${this.actualPokemon}! Your Total Score increased by ${this.currentScore}. Click 'Next' to go to the next Pokemon`;
         this.totalScore = this.totalScore + this.currentScore;
