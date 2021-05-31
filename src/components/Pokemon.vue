@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <div :class="['container mx-auto', 'bg']">
     <h1>Who's That Pokemon?</h1>
     <img
       v-bind:src="pokemonImg"
@@ -24,21 +24,36 @@
       <p></p>
       <div v-if="guessbtn">
         <button
-          class="focus:outline-none text-white text-sm py-2 px-4 rounded-full bg-green-400 hover:bg-green-500 hover:shadow-lg"
+          class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-600 gap: 20px hover:bg-blue-300 hover:shadow-lg hover:text-black"
           @click="guess(pokemonGuess)"
         >
           Guess
         </button>
-        <button @click="skip()">Skip Pokemon</button>
+        <button
+          class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-red-600 gap: 20px hover:bg-red-300 hover:shadow-lg hover:text-black"
+          @click="skip()"
+        >
+          Skip Pokemon
+        </button>
       </div>
       <div v-if="next">
         <button @click="nextfunc()">Next</button>
       </div>
       <br />
-      <button @click="restart()">Start Over!</button>
+      <button
+        class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
+        @click="restart()"
+      >
+        Start Over!
+      </button>
     </div>
     <div v-else>
-      <button @click="generatePokemon">Get Started!</button>
+      <button
+        class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-yellow-400 gap: 20px hover:bg-yellow-100 hover:shadow-lg hover:text-yellow-600"
+        @click="generatePokemon"
+      >
+        Get Started!
+      </button>
     </div>
     <p>{{ message }}</p>
     <div>Current Score: {{ currentScore }}</div>
@@ -196,5 +211,8 @@ a {
 .normal {
   height: 200px;
   width: 200px;
+}
+.bg {
+  background-image: "/images/backgroundP.png";
 }
 </style>
