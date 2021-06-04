@@ -1,6 +1,8 @@
 <template>
   <div :class="['container mx-auto', 'bg']">
-    <h1>Who's That Pokemon?</h1>
+    <h1 class="font-mono text-lg font-bold text-yellow-400">
+      Who's That Pokemon?
+    </h1>
     <img
       v-bind:src="pokemonImg"
       :class="[
@@ -37,9 +39,13 @@
         </button>
       </div>
       <div v-if="next">
-        <button @click="nextfunc()">Next</button>
+        <button
+          class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
+          @click="nextfunc()"
+        >
+          Next
+        </button>
       </div>
-      <br />
       <button
         class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
         @click="restart()"
@@ -92,6 +98,7 @@ export default {
       highScore: 0,
       next: false,
       guessbtn: true,
+      gameState: "initial",
     };
   },
   watch: {
@@ -213,6 +220,6 @@ a {
   width: 200px;
 }
 .bg {
-  background-image: "/images/backgroundP.png";
+  background: red;
 }
 </style>
