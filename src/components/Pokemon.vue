@@ -14,7 +14,15 @@
     <!-- <img v-bind:src="pokemonImg" :class="['normal', {silhouette: silhouetteSelected}]" > -->
     <!-- Next one is not inline, but using computed properties -->
     <!-- <img v-bind:src="pokemonImg" class="normal" :class="silhouetteActive" > -->
-    <div v-if="id">
+    <div v-if="gameState === 'initial'">
+      <button
+        class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-yellow-400 gap: 20px hover:bg-yellow-100 hover:shadow-lg hover:text-yellow-600"
+        @click="generatePokemon"
+      >
+        Get Started!
+      </button>
+    </div>
+    <div v-else-if="gameState === 'guess'">
       <input
         type="text"
         v-model="pokemonGuess"
@@ -24,7 +32,7 @@
       />
       <br />
       <p></p>
-      <div v-if="guessbtn">
+      <div>
         <button
           class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-600 gap: 20px hover:bg-blue-300 hover:shadow-lg hover:text-black"
           @click="guess(pokemonGuess)"
@@ -38,27 +46,21 @@
           Skip Pokemon
         </button>
       </div>
-      <div v-if="next">
-        <button
-          class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
-          @click="nextfunc()"
-        >
-          Next
-        </button>
-      </div>
+    </div>
+    <div v-else-if="gameState === 'reveal'">
+      <button
+        class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
+        @click="nextfunc()"
+      >
+        Next
+      </button>
+    </div>
+    <div v-if="id">
       <button
         class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-blue-400 gap: 20px hover:bg-blue-50 hover:shadow-lg hover:text-blue-900"
         @click="restart()"
       >
         Start Over!
-      </button>
-    </div>
-    <div v-else>
-      <button
-        class="focus:outline-none text-white text-sm py-2 px-4 m-2 rounded-full bg-yellow-400 gap: 20px hover:bg-yellow-100 hover:shadow-lg hover:text-yellow-600"
-        @click="generatePokemon"
-      >
-        Get Started!
       </button>
     </div>
     <p>{{ message }}</p>
@@ -121,7 +123,7 @@ export default {
         this.silhouetteSelected = false;
         this.next = true;
         this.guessbtn = false;
-
+        this.gameState = "reveal";
         if (this.totalScore > this.highScore) {
           this.highScore = this.totalScore;
         }
@@ -137,6 +139,7 @@ export default {
       this.guessedPokemon.push(this.id);
       console.log(this.actualPokemon);
       this.silhouetteSelected = true;
+      this.gameState = "guess";
     },
     //generating a new pokemon ID
     async newPokemonGenerated() {
@@ -169,7 +172,7 @@ export default {
       this.totalScore = 0;
       this.pokemonImg = "/images/question.png";
       this.guessbtn = true;
-
+      this.gameState = "initial";
       this.message = "";
       this.next = false;
     },
@@ -179,6 +182,7 @@ export default {
       this.next = true;
       this.silhouetteSelected = false;
       this.guessbtn = false;
+      this.gameState = "reveal";
     },
     async nextfunc() {
       this.currentScore = 20;
@@ -189,7 +193,7 @@ export default {
       this.next = false;
       this.pokemonGuess = "";
       this.guessbtn = true;
-
+      this.gameState = "guess";
       console.log(this.actualPokemon);
     },
   },
