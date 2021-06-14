@@ -1,5 +1,5 @@
 <template>
-  <div :class="['container mx-auto', 'bg']">
+  <div :class="['container mx-auto']">
     <h1 class="font-mono text-lg font-bold text-yellow-400">
       Who's That Pokemon?
     </h1>
