@@ -1,6 +1,6 @@
 <template>
   <div :class="['container mx-auto']">
-    <h1 class="font-mono text-lg font-bold text-yellow-400">
+    <h1 class="font-mono text-2xl font-bold text-yellow-400">
       Who's That Pokemon?
     </h1>
     <img
@@ -21,6 +21,28 @@
       >
         Get Started!
       </button>
+      <div id="checkboxDiv">
+        <h2>Chose Which Generation you would like to play:</h2>
+        <h4>
+          (If you would like to play all generations just click: "Get Started!")
+        </h4>
+        <input type="checkbox" id="gen1" name="gen1" value="gen1selected" />
+        <label for="gen1" class="genLabel">Generation 1</label>
+        <input type="checkbox" id="gen2" name="gen2" value="gen2selected" />
+        <label for="gen2" class="genLabel">Generation 2</label>
+        <input type="checkbox" id="gen3" name="gen3" value="gen3selected" />
+        <label for="gen3" class="genLabel">Generation 3</label>
+        <input type="checkbox" id="gen4" name="gen4" value="gen4selected" />
+        <label for="gen4" class="genLabel">Generation 4</label><br />
+        <input type="checkbox" id="gen5" name="gen5" value="gen5selected" />
+        <label for="gen5" class="genLabel">Generation 5</label>
+        <input type="checkbox" id="gen6" name="gen6" value="gen6selected" />
+        <label for="gen6" class="genLabel">Generation 6</label>
+        <input type="checkbox" id="gen7" name="gen7" value="gen7selected" />
+        <label for="gen7" class="genLabel">Generation 7</label>
+        <input type="checkbox" id="gen8" name="gen8" value="gen8selected" />
+        <label for="gen8" class="genLabel">Generation 8</label><br />
+      </div>
     </div>
     <div v-else-if="gameState === 'guess'">
       <input
@@ -105,6 +127,11 @@ export default {
   },
   watch: {
     //put in a watcher to see if the user's current score hits 0 (if so then give them a message and go to the skip function)
+    // //guessedPokemon() {
+    //   if(this.guessedPokemon.length > 898) {
+    //      this.message = "Congragulations you finsihed guessing all of the Pokemon"
+    //   }
+    // }
   },
   computed: {
     // silhouetteActive() {
@@ -184,6 +211,27 @@ export default {
       this.guessbtn = false;
       this.gameState = "reveal";
     },
+    fillGenArrays() {
+      for (let i = 1; i < 898; i++) {
+        if (i < 152) {
+          this.gen1Pokemon.push(i);
+        } else if (i < 252) {
+          this.gen2Pokemon.push(i);
+        } else if (i < 387) {
+          this.gen3Pokemon.push(i);
+        } else if (i < 494) {
+          this.gen4Pokemon.push(i);
+        } else if (i < 650) {
+          this.gen5Pokemon.push(i);
+        } else if (i < 722) {
+          this.gen6Pokemon.push(i);
+        } else if (i < 810) {
+          this.gen7Pokemon.push(i);
+        } else {
+          this.gen8Pokemon.push(i);
+        }
+      }
+    },
     async nextfunc() {
       this.currentScore = 20;
       this.newPokemonGenerated();
@@ -202,6 +250,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h1 {
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.25em;
+}
+h4 {
+  margin-bottom: 12.5px;
+  font-size: 0.75em;
+}
 h3 {
   margin: 40px 0 0;
 }
@@ -225,5 +283,13 @@ a {
 }
 .bg {
   background: red;
+}
+.genLabel {
+  margin-right: 20px;
+  margin-left: 10px;
+}
+#checkboxDiv {
+  margin-top: 10px;
+  margin-bottom: 25px;
 }
 </style>
